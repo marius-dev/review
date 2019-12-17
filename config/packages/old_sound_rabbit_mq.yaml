@@ -1,0 +1,20 @@
+old_sound_rabbit_mq:
+    connections:
+        ohs:
+            url: '%env(OHS_RABBITMQ_URL)%'
+            lazy: true
+
+    producers:
+        # use 'old_sound_rabbit_mq.task_producer' service to send data.
+        bought_status_check:
+            connection:       ohs
+            exchange_options: { name: 'bought_status_check', type: direct }
+            class: App\Producer\BoughtStatusCheckProducer
+            service_alias: App\Producer\BoughtStatusCheckProducer
+
+#    consumers:
+#        task:
+#            connection:       default
+#            exchange_options: { name: 'task', type: direct }
+#            queue_options:    { name: 'task'}
+#            callback:         App\Consumer\TaskConsumer
